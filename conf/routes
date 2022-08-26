@@ -16,3 +16,10 @@ GET         /api/rooms/:id                  controllers.RoomController.getById(i
 POST        /api/rooms                      controllers.RoomController.create()
 PUT         /api/rooms/:id                  controllers.RoomController.update(id: Long)
 DELETE      /api/rooms/:id                  controllers.RoomController.delete(id: Long)
+
+# Customer Routes
+GET         /api/customers                      controllers.CustomerController.getAll()
+GET         /api/customers/:id                  controllers.CustomerController.getById(id: Long)
+POST        /api/customers                      controllers.CustomerController.create()
+PUT         /api/customers/:id                  controllers.CustomerController.update(id: Long)
+DELETE      /api/customers/:id                  controllers.CustomerController.delete(id: Long)
