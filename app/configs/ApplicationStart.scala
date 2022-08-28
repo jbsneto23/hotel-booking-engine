@@ -1,14 +1,15 @@
 package configs
 
 import com.google.inject.AbstractModule
-import dtos.{CustomerInput, RoomInput}
+import dtos.{BookingInput, CustomerInput, RoomInput}
 import services._
 
+import java.time.{LocalDate, LocalDateTime, LocalTime}
 import javax.inject._
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ApplicationStart @Inject() (roomService: RoomService, customerService: CustomerService)(implicit executionContext: ExecutionContext) {
+class ApplicationStart @Inject()(roomService: RoomService, customerService: CustomerService, bookingService: BookingService)(implicit executionContext: ExecutionContext) {
   private val logger = play.api.Logger("application")
 
   // Rooms Test Data
@@ -20,6 +21,12 @@ class ApplicationStart @Inject() (roomService: RoomService, customerService: Cus
   // Customers Test Data
   customerService.create(CustomerInput(None, "John", "Doe", "johndoe@test.com", "1111111"))
   customerService.create(CustomerInput(None, "Jane", "Doe", "janedoe@test.com", "2222222"))
+
+  // Bookings Test Data
+  bookingService.create(BookingInput(None, LocalDate.of(2022, 10, 10), LocalDate.of(2022, 10, 12), LocalTime.of(14, 0), LocalTime.of(12, 0), 1, 1, Some(LocalDateTime.now())))
+  bookingService.create(BookingInput(None, LocalDate.of(2022, 10, 10), LocalDate.of(2022, 10, 12), LocalTime.of(14, 0), LocalTime.of(12, 0), 2, 2, Some(LocalDateTime.now())))
+  bookingService.create(BookingInput(None, LocalDate.of(2022, 11, 10), LocalDate.of(2022, 11, 12), LocalTime.of(14, 0), LocalTime.of(12, 0), 1, 3, Some(LocalDateTime.now())))
+  bookingService.create(BookingInput(None, LocalDate.of(2022, 11, 10), LocalDate.of(2022, 11, 12), LocalTime.of(14, 0), LocalTime.of(12, 0), 2, 4, Some(LocalDateTime.now())))
 
   logger.info("Starting with test data")
 }

@@ -29,7 +29,9 @@ class CustomerServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
 
       val expectedCustomerOutput = CustomerOutput(1, "Test", "Test", "test@test.com", "11111")
 
-      actualCustomerOutputFuture map { actualCustomerOutput => actualCustomerOutput mustBe expectedCustomerOutput }
+      ScalaFutures.whenReady(actualCustomerOutputFuture) { actualCustomerOutput =>
+        actualCustomerOutput mustBe expectedCustomerOutput
+      }
     }
   }
 
@@ -43,9 +45,11 @@ class CustomerServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
       val customerService = new CustomerService(customerRepository)
       val actualCustomerOutputFuture = customerService.getById(1)
 
-      val expectedCustomerOutput = Some(CustomerOutput(1, "Test", "Test", "test@test.com", "11111"))
+      val expectedCustomerOutput = CustomerOutput(1, "Test", "Test", "test@test.com", "11111")
 
-      actualCustomerOutputFuture map { actualCustomerOutput => actualCustomerOutput mustBe expectedCustomerOutput }
+      ScalaFutures.whenReady(actualCustomerOutputFuture) { actualCustomerOutput =>
+        actualCustomerOutput mustBe expectedCustomerOutput
+      }
     }
 
     "throw ResourceNotFoundException if an id is provided but it does not exists in the repository" in {
@@ -60,7 +64,6 @@ class CustomerServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
         e mustBe a[ResourceNotFoundException]
       }
     }
-
   }
 
   "CustomerService#getAll" should {
@@ -107,7 +110,7 @@ class CustomerServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
 
       val expectedCustomerOutput = CustomerOutput(1, "Test", "Test", "test@test.com", "11111")
 
-      actualCustomerOutputFuture map { actualCustomerOutput => actualCustomerOutput mustBe expectedCustomerOutput }
+      ScalaFutures.whenReady(actualCustomerOutputFuture) { actualCustomerOutput => actualCustomerOutput mustBe expectedCustomerOutput }
     }
 
     "throw ResourceNotFoundException if an input customer is provided but it does not exists in the repository" in {
@@ -145,8 +148,5 @@ class CustomerServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
         e mustBe a[ResourceNotFoundException]
       }
     }
-
   }
-
-
 }

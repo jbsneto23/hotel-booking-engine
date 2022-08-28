@@ -1,2 +1,5 @@
 error.boolean=Boolean value expected
+error.localTime=Time must be in the format 'HH:mm'
+error.date=Date must be in the format 'yyyy-MM-dd'
 error.phone=A valid phone number is required (only numbers are accepted)
+error.checkinDate=Check-in date must be before check-out date

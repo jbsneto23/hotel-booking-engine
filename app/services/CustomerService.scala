@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class CustomerService @Inject()(private val customerRepository: CustomerRepository)(implicit executionContext: ExecutionContext) {
 
   def getAll(): Future[Seq[CustomerOutput]] = {
-    customerRepository.getAll().map(Customers => Customers.map(c => c))
+    customerRepository.getAll().map(customers => customers.map(c => c))
   }
 
   def getById(id: Long): Future[CustomerOutput] = {

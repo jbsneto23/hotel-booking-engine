@@ -29,7 +29,9 @@ class RoomServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
 
       val expectedRoomOutput = RoomOutput(1, "Test Title", "Test Description", 1, 0, false)
 
-      actualRoomOutputFuture map { actualRoomOutput => actualRoomOutput mustBe expectedRoomOutput }
+      ScalaFutures.whenReady(actualRoomOutputFuture) { actualRoomOutput =>
+        actualRoomOutput mustBe expectedRoomOutput
+      }
     }
   }
 
@@ -43,9 +45,11 @@ class RoomServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
       val roomService = new RoomService(roomRepository)
       val actualRoomOutputFuture = roomService.getById(1)
 
-      val expectedRoomOutput = Some(RoomOutput(1, "Test Title", "Test Description", 1, 0, false))
+      val expectedRoomOutput = RoomOutput(1, "Test Title", "Test Description", 1, 0, false)
 
-      actualRoomOutputFuture map { actualRoomOutput => actualRoomOutput mustBe expectedRoomOutput }
+      ScalaFutures.whenReady(actualRoomOutputFuture) { actualRoomOutput =>
+        actualRoomOutput mustBe expectedRoomOutput
+      }
     }
 
     "throw ResourceNotFoundException if an id is provided but it does not exists in the repository" in {
@@ -91,7 +95,6 @@ class RoomServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
         rooms mustBe Seq()
       }
     }
-
   }
 
   "RoomService#update" should {
@@ -107,7 +110,9 @@ class RoomServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
 
       val expectedRoomOutput = RoomOutput(1, "Test Title", "Test Description", 1, 0, false)
 
-      actualRoomOutputFuture map { actualRoomOutput => actualRoomOutput mustBe expectedRoomOutput }
+      ScalaFutures.whenReady(actualRoomOutputFuture) { actualRoomOutput =>
+        actualRoomOutput mustBe expectedRoomOutput
+      }
     }
 
     "throw ResourceNotFoundException if an input room is provided but it does not exists in the repository" in {
@@ -122,7 +127,6 @@ class RoomServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
         e mustBe a[ResourceNotFoundException]
       }
     }
-
   }
 
   "RoomService#delete" should {
@@ -145,8 +149,6 @@ class RoomServiceSpec extends PlaySpec with ScalaFutures with MockitoSugar {
         e mustBe a[ResourceNotFoundException]
       }
     }
-
   }
-
 
 }
